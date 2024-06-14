@@ -6,7 +6,8 @@ import notFound from "./app/middleware/notFound";
 import globalErrorHandler from "./app/middleware/GlobalErrorHandle";
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  const htmlContent = `<h1 style="text-align: center; color: blue; font-size: 70px; margin-top: 50px">Sports backend server is ok !</h1>`;
+  res.send(htmlContent);
 });
 
 app.use(express.json());
@@ -16,3 +17,5 @@ app.use(globalErrorHandler);
 app.use(notFound);
 
 export default app;
+
+

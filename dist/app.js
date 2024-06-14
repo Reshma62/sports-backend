@@ -10,7 +10,8 @@ const routes_1 = __importDefault(require("./app/routes"));
 const notFound_1 = __importDefault(require("./app/middleware/notFound"));
 const GlobalErrorHandle_1 = __importDefault(require("./app/middleware/GlobalErrorHandle"));
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    const htmlContent = `<h1 style="text-align: center; color: blue; font-size: 70px; margin-top: 50px">Sports backend server is ok !</h1>`;
+    res.send(htmlContent);
 });
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
