@@ -19,3 +19,16 @@ export const updateFacilityService = async (
   const result = await Facility.findByIdAndUpdate(id, payload, { new: true });
   return result;
 };
+export const deleteFacilityService = async (id: string) => {
+  const existsFacility = await Facility.findById(id);
+  if (!existsFacility) {
+    throw new Error("Facility does not exist");
+  }
+
+  const result = await Facility.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true }
+  );
+  return result;
+};

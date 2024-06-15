@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import {
   createFacilityService,
+  deleteFacilityService,
   updateFacilityService,
 } from "./facility.service";
 
@@ -38,6 +39,24 @@ export const updateFacilityController: RequestHandler = async (
       statusCode: httpStatus.OK,
       success: true,
       message: " Facility is updated successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+export const deleteFacilityController: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteFacilityService(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: " Facility is deleted successfully",
       data: result,
     });
   } catch (err) {

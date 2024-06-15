@@ -3,6 +3,7 @@ const _ = Router();
 // controller
 import {
   createFacilityController,
+  deleteFacilityController,
   updateFacilityController,
 } from "./facility.controller";
 import { ValidateDataSchema } from "../../middleware/ValidateDataSchema";
@@ -24,5 +25,6 @@ _.put(
   auth("admin"),
   updateFacilityController
 );
+_.delete("/:id", auth("admin"), deleteFacilityController);
 
 export const FacilityRoutes = _;
