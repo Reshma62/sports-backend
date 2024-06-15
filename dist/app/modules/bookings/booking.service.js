@@ -10,9 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createBookingService = void 0;
+const availabilityUtils_1 = require("../../utils/availabilityUtils");
 const booking_model_1 = require("./booking.model");
-const createBookingService = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_model_1.Booking.create(payload);
+const createBookingService = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
+    const { facility, startTime, endTime, date } = payload;
+    const isAvailable = yield (0, availabilityUtils_1.checkAvailabilityForCreateBooking)(facility.toString(), date, startTime, endTime);
+    console.log(isAvailable, "isAvailable");
+    if (!isAvailable) {
+        throw new Error("This time slot is not available");
+    }
+    const result = yield booking_model_1.Booking.create(Object.assign(Object.assign({}, payload), { user }));
     return result;
 });
 exports.createBookingService = createBookingService;

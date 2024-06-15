@@ -19,7 +19,8 @@ const http_status_1 = __importDefault(require("http-status"));
 const createBookingController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
-        const result = yield (0, booking_service_1.createBookingService)(data);
+        const { _id } = req.user;
+        const result = yield (0, booking_service_1.createBookingService)(data, _id);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,

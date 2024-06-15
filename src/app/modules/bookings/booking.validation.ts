@@ -6,8 +6,8 @@ const createBookingSchema = z.object({
       date: z.string(),
       startTime: z.string(),
       endTime: z.string(),
-      payableAmount: z.number(),
-      isBooked: z.enum(["confirmed", "canceled"]),
+      payableAmount: z.number().optional(),
+      // isBooked: z.enum(["confirmed", "canceled"]),
     })
     .refine(
       (data) => {
@@ -26,7 +26,8 @@ const updateBookingSchema = z.object({
     startTime: z.string().optional(),
     endTime: z.string().optional(),
     payableAmount: z.number().optional(),
-    isBooked: z.enum(["confirmed", "canceled"]).optional(),
+    pricePerHour: z.number().optional(),
+    // isBooked: z.enum(["confirmed", "canceled"]).optional(),
   }),
 });
 

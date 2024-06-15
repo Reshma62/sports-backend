@@ -10,7 +10,8 @@ export const createBookingController: RequestHandler = async (
 ) => {
   try {
     const data = req.body;
-    const result = await createBookingService(data);
+    const { _id } = req.user;
+    const result = await createBookingService(data, _id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

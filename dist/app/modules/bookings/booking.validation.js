@@ -8,8 +8,8 @@ const createBookingSchema = zod_1.z.object({
         date: zod_1.z.string(),
         startTime: zod_1.z.string(),
         endTime: zod_1.z.string(),
-        payableAmount: zod_1.z.number(),
-        isBooked: zod_1.z.enum(["confirmed", "canceled"]),
+        payableAmount: zod_1.z.number().optional(),
+        // isBooked: z.enum(["confirmed", "canceled"]),
     })
         .refine((data) => {
         return data.startTime < data.endTime;
@@ -25,7 +25,8 @@ const updateBookingSchema = zod_1.z.object({
         startTime: zod_1.z.string().optional(),
         endTime: zod_1.z.string().optional(),
         payableAmount: zod_1.z.number().optional(),
-        isBooked: zod_1.z.enum(["confirmed", "canceled"]).optional(),
+        pricePerHour: zod_1.z.number().optional(),
+        // isBooked: z.enum(["confirmed", "canceled"]).optional(),
     }),
 });
 exports.updateBookingSchema = updateBookingSchema;
