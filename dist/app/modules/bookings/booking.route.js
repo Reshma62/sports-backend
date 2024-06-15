@@ -12,8 +12,8 @@ const auth_1 = __importDefault(require("../../middleware/auth/auth"));
 const ValidateDataSchema_1 = require("../../middleware/ValidateDataSchema");
 const booking_validation_1 = require("./booking.validation");
 // routes
-_.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+_.get("/", (0, auth_1.default)("admin"), booking_controller_1.getAllController);
+_.get("/user", (0, auth_1.default)("user"), booking_controller_1.getUsersAllController);
 _.post("/", (0, ValidateDataSchema_1.ValidateDataSchema)(booking_validation_1.createBookingSchema), (0, auth_1.default)("user"), booking_controller_1.createBookingController);
+_.delete("/:id", (0, auth_1.default)("user"), booking_controller_1.cancelBookingController);
 exports.BookingRoutes = _;

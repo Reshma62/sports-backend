@@ -68,6 +68,9 @@ export const deleteFacilityController: RequestHandler = async (
 export const getFacilityController: RequestHandler = async (req, res, next) => {
   try {
     const result = await getFacilityService();
+        if (result.length === 0) {
+          throw new Error("No Data Found");
+        }
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

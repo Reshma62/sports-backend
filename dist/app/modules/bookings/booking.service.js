@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createBookingService = void 0;
+exports.cancelBookingService = exports.getUsersBookingService = exports.getAllBookingService = exports.createBookingService = void 0;
 const availabilityUtils_1 = require("../../utils/availabilityUtils");
 const booking_model_1 = require("./booking.model");
+// create booking
 const createBookingService = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
     const { facility, startTime, endTime, date } = payload;
     const isAvailable = yield (0, availabilityUtils_1.checkAvailabilityForCreateBooking)(facility.toString(), date, startTime, endTime);
@@ -23,3 +24,24 @@ const createBookingService = (payload, user) => __awaiter(void 0, void 0, void 0
     return result;
 });
 exports.createBookingService = createBookingService;
+// get all bookings for admin
+const getAllBookingService = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.Booking.find({}).populate("user", "-createdAt -updatedAt -isDeleted -status -__v").populate("facility");
+    return result;
+});
+exports.getAllBookingService = getAllBookingService;
+// get booking for user
+const getUsersBookingService = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.Booking.find({ user }).populate("user", "-createdAt -updatedAt -isDeleted -status -__v").populate("facility");
+    return result;
+});
+exports.getUsersBookingService = getUsersBookingService;
+// cancel booking for user
+const cancelBookingService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.Booking.findByIdAndUpdate(id, { isBooked: "canceled" }, { new: true });
+    if (!result) {
+        throw new Error("Booking not found");
+    }
+    return result;
+});
+exports.cancelBookingService = cancelBookingService;

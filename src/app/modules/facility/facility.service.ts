@@ -1,4 +1,3 @@
-import { IUser } from "../user/users.interface";
 import { IFacility } from "./facility.interface";
 import { Facility } from "./facility.model";
 

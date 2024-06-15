@@ -68,6 +68,9 @@ exports.deleteFacilityController = deleteFacilityController;
 const getFacilityController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield (0, facility_service_1.getFacilityService)();
+        if (result.length === 0) {
+            throw new Error("No Data Found");
+        }
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,
