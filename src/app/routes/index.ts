@@ -4,6 +4,7 @@ import { Router } from "express";
 import { AuthRoutes } from "../modules/auth/auth.route";
 import { FacilityRoutes } from "../modules/facility/facility.route";
 import { BookingRoutes } from "../modules/bookings/booking.route";
+import { CheckAvaiableRoutes } from "../modules/checkAvaialable/checkAvaiable.route";
 
 const router = Router();
 
@@ -19,6 +20,10 @@ const moduleRoutes = [
   {
     path: "/api/bookings",
     route: BookingRoutes,
+  },
+  {
+    path: "/api/check-availability",
+    route: CheckAvaiableRoutes,
   },
 ];
 

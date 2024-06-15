@@ -4,6 +4,7 @@ const express_1 = require("express");
 const auth_route_1 = require("../modules/auth/auth.route");
 const facility_route_1 = require("../modules/facility/facility.route");
 const booking_route_1 = require("../modules/bookings/booking.route");
+const checkAvaiable_route_1 = require("../modules/checkAvaialable/checkAvaiable.route");
 const router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -17,6 +18,10 @@ const moduleRoutes = [
     {
         path: "/api/bookings",
         route: booking_route_1.BookingRoutes,
+    },
+    {
+        path: "/api/check-availability",
+        route: checkAvaiable_route_1.CheckAvaiableRoutes,
     },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

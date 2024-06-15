@@ -1,5 +1,10 @@
 import { Booking } from "../modules/bookings/booking.model";
+import { Types } from "mongoose";
 
+interface TimeSlot {
+  startTime: string;
+  endTime: string;
+}
 async function checkAvailabilityForCreateBooking(
   facilityId: string,
   date: string,
@@ -20,5 +25,8 @@ async function checkAvailabilityForCreateBooking(
     throw new Error("Failed to check availability");
   }
 }
+
+// Function to check availability of time slots for a specific date
+
 
 export { checkAvailabilityForCreateBooking };
