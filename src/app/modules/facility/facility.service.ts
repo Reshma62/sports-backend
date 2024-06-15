@@ -32,3 +32,8 @@ export const deleteFacilityService = async (id: string) => {
   );
   return result;
 };
+
+export const getFacilityService = async () => {
+  const result = await Facility.find({ $nor: [{ isDeleted: true }] });
+  return result;
+};

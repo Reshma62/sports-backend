@@ -4,6 +4,7 @@ const _ = Router();
 import {
   createFacilityController,
   deleteFacilityController,
+  getFacilityController,
   updateFacilityController,
 } from "./facility.controller";
 import { ValidateDataSchema } from "../../middleware/ValidateDataSchema";
@@ -13,6 +14,7 @@ import {
 } from "./facility.validation";
 import auth from "../../middleware/auth/auth";
 //  routes
+_.get("/", getFacilityController);
 _.post(
   "/",
   ValidateDataSchema(createFacilitySchema),

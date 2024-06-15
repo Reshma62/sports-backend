@@ -4,6 +4,7 @@ import httpStatus from "http-status";
 import {
   createFacilityService,
   deleteFacilityService,
+  getFacilityService,
   updateFacilityService,
 } from "./facility.service";
 
@@ -57,6 +58,20 @@ export const deleteFacilityController: RequestHandler = async (
       statusCode: httpStatus.OK,
       success: true,
       message: " Facility is deleted successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getFacilityController: RequestHandler = async (req, res, next) => {
+  try {
+    const result = await getFacilityService();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: " is created successfully",
       data: result,
     });
   } catch (err) {
