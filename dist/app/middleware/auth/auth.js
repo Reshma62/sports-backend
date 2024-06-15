@@ -17,21 +17,26 @@ const config_1 = __importDefault(require("../../config"));
 const users_model_1 = require("../../modules/user/users.model");
 const auth = (...allowedRoles) => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        const authHeader = req.headers["authorization"];
-        const token = authHeader && authHeader.split(" ")[1];
-        if (!token) {
-            throw new Error("You have no access to this route");
+        try {
+            const authHeader = req.headers["authorization"];
+            const token = authHeader && authHeader.split(" ")[1];
+            if (!token) {
+                return next(new Error("You have no access to this route"));
+            }
+            const decoded = jsonwebtoken_1.default.verify(token, config_1.default.accessTokenSecret);
+            const user = yield users_model_1.UserModel.findById(decoded.userId);
+            if (!user) {
+                return next(new Error("User does not exist"));
+            }
+            if (allowedRoles && !allowedRoles.includes(user.role)) {
+                return next(new Error("You have no access to this route"));
+            }
+            req.user = user;
+            next();
         }
-        const decoded = jsonwebtoken_1.default.verify(token, config_1.default.accessTokenSecret);
-        const user = yield users_model_1.UserModel.findById(decoded.userId);
-        if (!user) {
-            throw new Error("User does not exist");
+        catch (error) {
+            next(error);
         }
-        if (allowedRoles && !allowedRoles.includes(user.role)) {
-            throw new Error("You have no access to this route");
-        }
-        req.user = user;
-        next();
     });
 };
 exports.default = auth;
