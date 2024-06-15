@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateFacilityService = exports.createFacilityService = void 0;
+exports.getFacilityService = exports.deleteFacilityService = exports.updateFacilityService = exports.createFacilityService = void 0;
 const facility_model_1 = require("./facility.model");
 const createFacilityService = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield facility_model_1.Facility.create(payload);
@@ -25,3 +25,17 @@ const updateFacilityService = (id, payload) => __awaiter(void 0, void 0, void 0,
     return result;
 });
 exports.updateFacilityService = updateFacilityService;
+const deleteFacilityService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const existsFacility = yield facility_model_1.Facility.findById(id);
+    if (!existsFacility) {
+        throw new Error("Facility does not exist");
+    }
+    const result = yield facility_model_1.Facility.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+    return result;
+});
+exports.deleteFacilityService = deleteFacilityService;
+const getFacilityService = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_model_1.Facility.find({ $nor: [{ isDeleted: true }] });
+    return result;
+});
+exports.getFacilityService = getFacilityService;
