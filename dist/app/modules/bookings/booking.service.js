@@ -9,17 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidateDataSchema = void 0;
-const ValidateDataSchema = (schema) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        const body = req.body;
-        try {
-            yield schema.parseAsync({ body, cookies: req.cookies });
-            next();
-        }
-        catch (err) {
-            next(err);
-        }
-    });
-};
-exports.ValidateDataSchema = ValidateDataSchema;
+exports.createBookingService = void 0;
+const booking_model_1 = require("./booking.model");
+const createBookingService = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.Booking.create(payload);
+    return result;
+});
+exports.createBookingService = createBookingService;
