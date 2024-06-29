@@ -25,18 +25,25 @@ export const loginController: RequestHandler = async (req, res, next) => {
     const data = req.body;
     const { accessToken, refreshToken, loginUser } =
       await loginUserService(data);
-    const result = { accessToken, loginUser };
+    const result = { loginUser };
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: false,
     });
-
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: " User logged in successfully",
-      data: result,
+    res.status(httpStatus.OK).json({
+      success: data.success,
+      message: data.message,
+      data: loginUser,
+      token: accessToken,
     });
+    // sendResponse(res, {
+    //   statusCode: httpStatus.OK,
+    //   success: true,
+    //   message: " User logged in successfully",
+    //   data: result,
+    //   token: accessToken,
+    // });
   } catch (err) {
     next(err);
   }

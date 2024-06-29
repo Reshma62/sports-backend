@@ -36,17 +36,24 @@ const loginController = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     try {
         const data = req.body;
         const { accessToken, refreshToken, loginUser } = yield (0, auth_service_1.loginUserService)(data);
-        const result = { accessToken, loginUser };
+        const result = { loginUser };
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: false,
         });
-        (0, sendResponse_1.default)(res, {
-            statusCode: http_status_1.default.OK,
-            success: true,
-            message: " User logged in successfully",
-            data: result,
+        res.status(http_status_1.default.OK).json({
+            success: data.success,
+            message: data.message,
+            data: loginUser,
+            token: accessToken,
         });
+        // sendResponse(res, {
+        //   statusCode: httpStatus.OK,
+        //   success: true,
+        //   message: " User logged in successfully",
+        //   data: result,
+        //   token: accessToken,
+        // });
     }
     catch (err) {
         next(err);
